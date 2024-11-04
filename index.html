@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    /* Basic Body and Background Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    /* Full-Screen Particle Background */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-color: rgba(0, 0, 128, 0.3);
+    }
+
+    /* Profile Container Styling */
+    .profile-container {
+      text-align: center;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 2s ease-out;
+      position: relative; /* Allow absolute positioning of the sidebar */
+    }
+
+    /* Profile Picture */
+    .profile-picture img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: -70px;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      position: absolute; /* Position relative to profile container */
+      top: 0;
+      left: -300px; /* Hidden by default */
+      width: 250px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+      transition: left 0.3s ease;
+      z-index: 1000;
+      border-radius: 0 15px 15px 0; /* Rounded corners */
+    }
+
+    .sidebar.open {
+      left: 0; /* Show sidebar */
+    }
+
+    /* Button to Open Sidebar */
+    .open-sidebar-btn {
+      position: absolute;
+      top: 20px; /* Adjust position */
+      left: 20px; /* Adjust position */
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #ffdd57;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .open-sidebar-btn:hover {
+      color: #ffd700; /* Highlight color */
+    }
+
+    /* Close Button for Sidebar */
+    .close-sidebar-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-bottom: 20px;
+      float: right; /* Align to the right */
+    }
+
+    /* Sidebar Menu */
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .sidebar ul li a {
+      color: #ffdd57;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #ffd700;
+    }
+
+    /* Back to Home Button */
+    .back-to-home-btn {
+      background: #ffdd57;
+      border: none;
+      color: #000;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-top: 20px;
+      transition: background 0.3s;
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+
+    .back-to-home-btn:hover {
+      background: #ffd700;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #ddd;
+      position: relative;
+    }
+
+    /* Animated Name in Footer */
+    .animated-name {
+      color: #00ffff;
+      animation: colorChange 2s infinite alternate;
+    }
+
+    /* Keyframes for color change */
+    @keyframes colorChange {
+      0% { color: #00ffff; }
+      50% { color: #ff00ff; }
+      100% { color: #00ff00; }
+    }
+
+    /* Fade-In Animation for Profile Container */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Background Music -->
+  <audio id="background-music" loop autoplay>
+    <source src="Pagsuko - JIreh Lim (Lyrics).mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Profile Container -->
+  <div class="profile-container">
+    <!-- Profile Picture -->
+    <div class="profile-picture">
+      <img src="profile.jpg" alt="Your Name">
+    </div>
+
+    <!-- Name and Subtitle -->
+    <h1 class="profile-name">Sunnel John Reban</h1>
+    <p class="profile-subtitle">A website can download Spotify Downloader Only.</p>
+
+    <!-- Details (Age, Year, Birthday) -->
+    <div class="details">
+      <span>Age: 15</span> | <span>Year: 2009</span> | <span>Birthday: Sept 1, 2009</span>
+    </div>
+
+    <!-- Live Time and Date -->
+    <div id="live-date-time" class="live-date-time"></div>
+
+    <!-- Button to Open Sidebar -->
+    <button class="open-sidebar-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <button class="close-sidebar-btn" onclick="toggleSidebar()">✖</button>
+      <h2>Spotify Downloader</h2>
+      <ul>
+        <li><a href="spotify.html">Go to Spotify Downloader</a></li>
+      </ul>
+    </div>
+
+    <!-- Footer with Animated Name -->
+    <footer class="footer">
+      &copy; <span id="year">2024</span> 
+      <span class="animated-name">@Sunnel John Rebano</span>
+    </footer>
+  </div>
+
+  <!-- JavaScript for Dynamic Date/Time and Sidebar Toggle -->
+  <script>
+    // Initialize Particles.js for animated background
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3 },
+        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }
+      },
+      "interactivity": {
+        "events": { "onhover": { "enable": true, "mode": "repulse" } }
+      }
+    });
+
+    // Dynamic Date and Time Update
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString();
+      document.getElementById("live-date-time").textContent = now.toLocaleDateString(undefined, options) + ' | ' + time;
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Toggle Sidebar Functionality
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+    }
+  </script>
+</body>
+</html>
