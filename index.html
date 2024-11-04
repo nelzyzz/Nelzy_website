@@ -238,17 +238,37 @@
     </footer>
 
     <!-- Autoplay Music -->
-    <<audio id="background-music" autoplay muted>
-    <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+    <audio id="background-music" autoplay>
+      <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 
-  <button onclick="toggleAudio()">Unmute Music</button>
+    <button onclick="toggleAudio()">Unmute Music</button>
 
-  <script>
-    function toggleAudio() {
-      const audio = document.getElementById('background-music');
-      audio.muted = !audio.muted; // Toggle mute
-    }
-  </script>
+    <script>
+      function toggleAudio() {
+        const audio = document.getElementById('background-music');
+        audio.muted = !audio.muted; // Toggle mute
+      }
+
+      // Toggle Sidebar Function
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('open');
+      }
+
+      // Live Date and Time Functionality
+      function updateDateTime() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        document.getElementById('live-date-time').innerText = now.toLocaleString('en-US', options);
+      }
+
+            // Update the time every second
+      setInterval(updateDateTime, 1000);
+      // Initial call to set the date/time immediately on page load
+      updateDateTime();
+    </script>
+</body>
+</html>
 
