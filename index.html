@@ -264,26 +264,26 @@
     // Dynamic Date and Time Update
     function updateDateTime() {
       const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const time = now.toLocaleTimeString();
       document.getElementById("live-date-time").textContent = now.toLocaleDateString(undefined, options) + " " + time;
-      }
+    }
 
-      // Update date/time every second
-      setInterval(updateDateTime, 1000);
+    // Update date/time every second
+    setInterval(updateDateTime, 1000);
 
-      // Toggle Sidebar Function
-      function toggleSidebar() {
+    // Toggle Sidebar Function
+    function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("open");
-      }
+    }
 
-      // Initialize the year in the footer
-      document.getElementById("year").textContent = new Date().getFullYear();
+    // Initialize the year in the footer
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Initial call to update the date/time display
-      updateDateTime();
-      </script>
-      </body>
-      </html>
+    // Initial call to update the date/time display
+    updateDateTime();
+  </script>
+</body>
+</html>
 
