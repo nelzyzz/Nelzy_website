@@ -238,7 +238,7 @@
     </footer>
 
     <!-- Autoplay Music -->
-    <audio autoplay loop>
+    <audio id="background-music" autoplay loop>
       <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
@@ -256,7 +256,7 @@
         "size": { "value": 3 },
         "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }
       },
-      "interactivity": {
+            "interactivity": {
         "events": { "onhover": { "enable": true, "mode": "repulse" } }
       }
     });
@@ -264,7 +264,7 @@
     // Dynamic Date and Time Update
     function updateDateTime() {
       const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const time = now.toLocaleTimeString();
       document.getElementById("live-date-time").textContent = now.toLocaleDateString(undefined, options) + " " + time;
     }
