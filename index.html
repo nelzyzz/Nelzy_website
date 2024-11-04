@@ -165,6 +165,8 @@
       color: #00ffff;
       animation: colorChange 2s infinite alternate;
       visibility: hidden; /* Initially hidden */
+      opacity: 0; /* Initially invisible */
+      transition: opacity 1s; /* Transition for fade in */
     }
 
     /* Keyframes for color change */
@@ -184,6 +186,24 @@
     @keyframes fadeOut {
       from { opacity: 1; }
       to { opacity: 0; }
+    }
+
+    /* Play Music Button Style */
+    .play-music-btn {
+      background: #ffdd57;
+      border: none;
+      color: #000;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-top: 20px;
+      transition: background 0.3s;
+      display: inline-block; /* Make it inline-block */
+    }
+
+    .play-music-btn:hover {
+      background: #ffd700;
     }
   </style>
 </head>
@@ -210,38 +230,13 @@
     <!-- Live Time and Date -->
     <div id="live-date-time" class="live-date-time"></div>
 
-    <!-- Button to Open Sidebar -->
-    <button class="open-sidebar-btn" onclick="toggleSidebar()">☰</button>
-
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-      <button class="close-sidebar-btn" onclick="toggleSidebar()">✖</button>
-      <h2>Spotify Downloader</h2>
-      <ul>
-        <li><a href="spotify.html">Go to Spotify Downloader</a></li>
-        <h2>Spotify Search</h2>
-        <ul>
-          <li><a href="spotifysearch.html">Go to Spotify Search</a></li>
-        </ul>
-        <h2>TikTok Downloader</h2>
-        <ul>
-          <li><a href="tikdl.html">Go to TikTok Downloader</a></li>
-        </ul>
-        <h2>Microsoft Account Generator</h2>
-        <ul>
-          <li><a href="micro.html">Go to Microsoft Account Generator</a></li>
-        </ul>
-        <h2>Imgur Image to Link</h2>
-        <ul>
-          <li><a href="convert.html">Go to Imgur Image to Link</a></li>
-        </ul>
-      </ul>
-    </div>
+    <!-- Button to Play Music -->
+    <button class="play-music-btn" onclick="playMusic()">Play Music</button>
 
     <!-- Footer with Animated Name -->
     <footer class="footer">
       &copy; <span id="year">2024</span> 
-      <span class="animated-name" id="animated-name">@Sunnel John Rebano</span>
+      <span id="animated-name" class="animated-name">@Sunnel John Rebano</span>
     </footer>
 
     <!-- Autoplay Music -->
@@ -250,31 +245,17 @@
       Your browser does not support the audio element.
     </audio>
 
-    <button class="play-music-btn" onclick="playMusic()">Play Music</button>
-
     <script>
-      function toggleAudio() {
-        const audio = document.getElementById('background-music');
-        audio.muted = !audio.muted; // Toggle mute
-      }
-
+      // Function to update date and time
       function updateDateTime() {
         const now = new Date();
-        const options = { 
-          weekday: 'long', 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric', 
-          hour: '2-digit', 
-          minute: '2-digit', 
-          second: '2-digit' 
-        };
-        document.getElementById('live-date-time').innerText = now.toLocaleString('en-US', options);
+        const dateTimeString = now.toLocaleString();
+        document.getElementById('live-date-time').innerText = dateTimeString;
       }
 
-      // Function to play music and fade out the button
+      // Play music and handle button fade out
       function playMusic() {
-                const audio = document.getElementById('background-music');
+        const audio = document.getElementById('background-music');
         const button = document.querySelector('.play-music-btn');
         const animatedName = document.getElementById('animated-name');
 
@@ -287,24 +268,22 @@
 
         // Show the animated name after fade out
         setTimeout(() => {
-          animatedName.style.visibility = 'visible'; // Make the name visible again
+          button.style.display = 'none'; // Hide button after fading out
+          animatedName.style.visibility = 'visible'; // Make the name visible
+          animatedName.style.opacity = 1; // Fade in the name
         }, 1000); // Match this with the duration of the fade out
       }
 
-      // Sidebar toggle function
+            // Sidebar toggle function
       function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('open');
       }
 
-      // Initialize date and time display
+      // Update the live date and time every second
       setInterval(updateDateTime, 1000);
-      updateDateTime(); // Initial call to set the date and time immediately
+      updateDateTime(); // Initial call to set the time immediately
 
-      // Hide the animated name initially
-      window.onload = function() {
-        document.getElementById('animated-name').style.visibility = 'hidden';
-      };
     </script>
 </body>
 </html>
