@@ -181,7 +181,6 @@
     .animated-name {
       color: #00ffff;
       animation: colorChange 2s infinite alternate;
-      display: none; /* Initially hidden */
     }
 
     /* Keyframes for color change */
@@ -261,7 +260,7 @@
     <!-- Footer with Animated Name -->
     <footer class="footer">
       &copy; <span id="year">2024</span> 
-      <span id="animated-name" class="animated-name">@Sunnel John Rebano</span>
+      <span class="animated-name">@Sunnel John Rebano</span>
     </footer>
 
     <!-- Autoplay Music -->
@@ -321,15 +320,6 @@
       // Initialize date/time update
       setInterval(updateDateTime, 1000); // Update every second
       updateDateTime(); // Initial call
-
-      // Autoplay background music on page load
-      window.onload = function() {
-        const audio = document.getElementById('background-music');
-        audio.volume = 0.5; // Set initial volume to 0.5 for autoplay
-        audio.play().catch(error => {
-          console.error('Autoplay failed:', error);
-        });
-      };
     </script>
   </div>
 </body>
