@@ -164,7 +164,9 @@
     .animated-name {
       color: #00ffff;
       animation: colorChange 2s infinite alternate;
-      display: none; /* Initially hide the animated name */
+      visibility: hidden; /* Initially hidden */
+      opacity: 0; /* Initially invisible */
+      transition: opacity 1s; /* Transition for fade in */
     }
 
     /* Keyframes for color change */
