@@ -152,23 +152,6 @@
       background: #ffd700;
     }
 
-    /* Play Music Button */
-    .play-music-btn {
-      background: #ffdd57;
-      border: none;
-      color: #000;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
-      margin-top: 20px;
-      transition: background 0.3s;
-    }
-
-    .play-music-btn:hover {
-      background: #ffd700;
-    }
-
     /* Footer */
     .footer {
       margin-top: 20px;
@@ -181,6 +164,7 @@
     .animated-name {
       color: #00ffff;
       animation: colorChange 2s infinite alternate;
+      visibility: hidden; /* Initially hidden */
     }
 
     /* Keyframes for color change */
@@ -196,7 +180,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* Fade-Out Animation for Audio */
+    /* Fade-Out Animation for Button */
     @keyframes fadeOut {
       from { opacity: 1; }
       to { opacity: 0; }
@@ -254,29 +238,26 @@
       </ul>
     </div>
 
-    <!-- Play Music Button -->
-    <button class="play-music-btn" onclick="playMusic()">Play Music</button>
-
     <!-- Footer with Animated Name -->
     <footer class="footer">
       &copy; <span id="year">2024</span> 
-      <span class="animated-name">@Sunnel John Rebano</span>
+      <span class="animated-name" id="animated-name">@Sunnel John Rebano</span>
     </footer>
 
     <!-- Autoplay Music -->
-    <audio id="background-music" preload="auto">
+    <audio id="background-music" autoplay muted>
       <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
 
+    <button class="play-music-btn" onclick="playMusic()">Play Music</button>
+
     <script>
-      // Function to toggle sidebar
-      function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('open');
+      function toggleAudio() {
+        const audio = document.getElementById('background-music');
+        audio.muted = !audio.muted; // Toggle mute
       }
 
-      // Function to update date and time
       function updateDateTime() {
         const now = new Date();
         const options = { 
@@ -293,29 +274,38 @@
 
       // Function to play music and fade out the button
       function playMusic() {
-        const audio = document.getElementById('background-music');
-        audio.volume = 0; // Start volume at 0
-        audio.play();
+                const audio = document.getElementById('background-music');
+        const button = document.querySelector('.play-music-btn');
+        const animatedName = document.getElementById('animated-name');
 
-        // Gradually increase the volume
-        const fadeInInterval = setInterval(() => {
-          if (audio.volume < 1) {
-            audio.volume += 0.1;
-          } else {
-            clearInterval(fadeInInterval); // Stop when volume reaches 1
-          }
-        }, 300); // Fade in duration
+        audio.muted = false; // Unmute the music
+        audio.play(); // Play the music
 
-        // Fade out the button after music starts
-        const playButton = document.querySelector('.play-music-btn');
-        playButton.style.animation = 'fadeOut 1s forwards'; // Start fade out animation
-        playButton.disabled = true; // Disable button after click
+        // Fade out the button
+        button.style.animation = 'fadeOut 1s forwards';
+        button.disabled = true; // Disable the button to prevent repeated clicks
+
+        // Show the animated name after fade out
+        setTimeout(() => {
+          animatedName.style.visibility = 'visible'; // Make the name visible again
+        }, 1000); // Match this with the duration of the fade out
       }
 
-      // Initialize date/time update
-      setInterval(updateDateTime, 1000); // Update every second
-      updateDateTime(); // Initial call
+      // Sidebar toggle function
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('open');
+      }
+
+      // Initialize date and time display
+      setInterval(updateDateTime, 1000);
+      updateDateTime(); // Initial call to set the date and time immediately
+
+      // Hide the animated name initially
+      window.onload = function() {
+        document.getElementById('animated-name').style.visibility = 'hidden';
+      };
     </script>
-  </div>
 </body>
 </html>
+
