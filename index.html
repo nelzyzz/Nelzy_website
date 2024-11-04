@@ -152,6 +152,23 @@
       background: #ffd700;
     }
 
+    /* Play Music Button */
+    .play-music-btn {
+      background: #ffdd57;
+      border: none;
+      color: #000;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    .play-music-btn:hover {
+      background: #ffd700;
+    }
+
     /* Footer */
     .footer {
       margin-top: 20px;
@@ -165,7 +182,6 @@
       color: #00ffff;
       animation: colorChange 2s infinite alternate;
       display: none; /* Initially hidden */
-      transition: opacity 1s; /* Transition for fade in */
     }
 
     /* Keyframes for color change */
@@ -181,24 +197,10 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* Play Music Button */
-    .play-music-btn {
-      background: #ffdd57;
-      border: none;
-      color: #000;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
-      margin-top: 20px;
-      transition: background 0.3s;
-      display: block;
-      text-align: center;
-      width: 100%;
-    }
-
-    .play-music-btn:hover {
-      background: #ffd700;
+    /* Fade-Out Animation for Audio */
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
   </style>
 </head>
@@ -254,7 +256,7 @@
     </div>
 
     <!-- Play Music Button -->
-    <button id="play-music-btn" class="play-music-btn" onclick="playMusic()">Play Music</button>
+    <button class="play-music-btn" onclick="playMusic()">Play Music</button>
 
     <!-- Footer with Animated Name -->
     <footer class="footer">
@@ -263,53 +265,73 @@
     </footer>
 
     <!-- Autoplay Music -->
-    <audio id="background-music" autoplay muted>
+    <audio id="background-music" preload="auto">
       <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
 
     <script>
-      let isPlaying = false;
+      // Initialize particles.js
+      particlesJS.load('particles-js', 'particles.json', function() {
+        console.log('callback - particles.js config loaded');
+      });
 
-            function playMusic() {
-        const audio = document.getElementById('background-music');
-        const playBtn = document.getElementById('play-music-btn');
-        const animatedName = document.getElementById('animated-name');
-
-        if (!isPlaying) {
-          audio.muted = false; // Unmute the audio
-          audio.play(); // Play the music
-          playBtn.style.opacity = 0; // Fade out the button
-
-          setTimeout(() => {
-            playBtn.style.display = 'none'; // Hide button after fade out
-            animatedName.style.display = 'inline'; // Show animated name
-          }, 500); // Time for fade out effect
-        }
-        isPlaying = true; // Set to true to indicate music is playing
-      }
-
+      // Function to toggle sidebar
       function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
+                const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('open');
       }
 
+      // Function to update date and time
       function updateDateTime() {
         const now = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+        const options = { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric', 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit' 
+        };
         document.getElementById('live-date-time').innerText = now.toLocaleString('en-US', options);
       }
 
-      // Update date/time every second
-      setInterval(updateDateTime, 1000);
-      updateDateTime(); // Initial call to set time on load
-
-      // Ensure music plays on page load with muted state
-      document.addEventListener('DOMContentLoaded', () => {
+      // Function to play music and fade out the button
+      function playMusic() {
         const audio = document.getElementById('background-music');
-        audio.muted = true; // Start muted
-      });
+        audio.volume = 0; // Start volume at 0
+        audio.play();
+
+        // Gradually increase the volume
+        const fadeInInterval = setInterval(() => {
+          if (audio.volume < 1) {
+            audio.volume += 0.1;
+          } else {
+            clearInterval(fadeInInterval); // Stop when volume reaches 1
+          }
+        }, 300); // Fade in duration
+
+        // Fade out the button after music starts
+        const playButton = document.querySelector('.play-music-btn');
+        playButton.style.animation = 'fadeOut 1s forwards'; // Start fade out animation
+        playButton.disabled = true; // Disable button after click
+      }
+
+      // Initialize date/time update
+      setInterval(updateDateTime, 1000); // Update every second
+      updateDateTime(); // Initial call
+
+      // Autoplay background music on page load
+      window.onload = function() {
+        const audio = document.getElementById('background-music');
+        audio.volume = 0.5; // Set initial volume to 0.5 for autoplay
+        audio.play().catch(error => {
+          console.error('Autoplay failed:', error);
+        });
+      };
     </script>
+  </div>
 </body>
 </html>
 
