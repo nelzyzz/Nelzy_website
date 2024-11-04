@@ -42,7 +42,7 @@
       width: 350px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
       animation: fadeIn 2s ease-out;
-      position: relative; /* Allow absolute positioning of the sidebar */
+      position: relative;
     }
 
     /* Profile Picture */
@@ -57,9 +57,9 @@
 
     /* Sidebar Styling */
     .sidebar {
-      position: absolute; /* Position relative to profile container */
+      position: absolute;
       top: 0;
-      left: -300px; /* Hidden by default */
+      left: -300px;
       width: 250px;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.8);
@@ -68,18 +68,19 @@
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
       transition: left 0.3s ease;
       z-index: 1000;
-      border-radius: 0 15px 15px 0; /* Rounded corners */
+      border-radius: 0 15px 15px 0;
+      overflow-y: auto; /* Enable vertical scrolling */
     }
 
     .sidebar.open {
-      left: 0; /* Show sidebar */
+      left: 0;
     }
 
     /* Button to Open Sidebar */
     .open-sidebar-btn {
       position: absolute;
-      top: 20px; /* Adjust position */
-      left: 20px; /* Adjust position */
+      top: 20px;
+      left: 20px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -89,7 +90,7 @@
     }
 
     .open-sidebar-btn:hover {
-      color: #ffd700; /* Highlight color */
+      color: #ffd700;
     }
 
     /* Close Button for Sidebar */
@@ -100,7 +101,7 @@
       font-size: 1.5rem;
       cursor: pointer;
       margin-bottom: 20px;
-      float: right; /* Align to the right */
+      float: right;
     }
 
     /* Sidebar Menu */
@@ -183,12 +184,6 @@
   <!-- Particle Background -->
   <div id="particles-js"></div>
 
-  <!-- Background Music -->
-  <audio id="background-music" loop autoplay>
-    <source src="Pagsuko - JIreh Lim (Lyrics).mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-
   <!-- Profile Container -->
   <div class="profile-container">
     <!-- Profile Picture -->
@@ -217,6 +212,22 @@
       <h2>Spotify Downloader</h2>
       <ul>
         <li><a href="spotify.html">Go to Spotify Downloader</a></li>
+        <h2>Spotify Search</h2>
+        <ul>
+          <li><a href="spotifysearch.html">Go to Spotify Search</a></li>
+        </ul>
+        <h2>TikTok Downloader</h2>
+        <ul>
+          <li><a href="tikdl.html">Go to TikTok Downloader</a></li>
+        </ul>
+        <h2>Microsoft Account Generator</h2>
+        <ul>
+          <li><a href="micro.html">Go to Microsoft Account Generator</a></li>
+        </ul>
+        <h2>Imgur Image to Link</h2>
+        <ul>
+          <li><a href="convert.html">Go to Imgur Image to Link</a></li>
+        </ul>
       </ul>
     </div>
 
@@ -225,6 +236,12 @@
       &copy; <span id="year">2024</span> 
       <span class="animated-name">@Sunnel John Rebano</span>
     </footer>
+
+    <!-- Autoplay Music -->
+    <audio autoplay loop>
+      <source src="https://nathanprinsley-files.prinsh.com/data-1/mp3/everything-i-need_skylar-grey.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
 
   <!-- JavaScript for Dynamic Date/Time and Sidebar Toggle -->
@@ -249,16 +266,24 @@
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const time = now.toLocaleTimeString();
-      document.getElementById("live-date-time").textContent = now.toLocaleDateString(undefined, options) + ' | ' + time;
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
+      document.getElementById("live-date-time").textContent = now.toLocaleDateString(undefined, options) + " " + time;
+      }
 
-    // Toggle Sidebar Functionality
-    function toggleSidebar() {
+      // Update date/time every second
+      setInterval(updateDateTime, 1000);
+
+      // Toggle Sidebar Function
+      function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("open");
-    }
-  </script>
-</body>
-</html>
+      }
+
+      // Initialize the year in the footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Initial call to update the date/time display
+      updateDateTime();
+      </script>
+      </body>
+      </html>
+
